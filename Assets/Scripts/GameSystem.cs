@@ -22,7 +22,7 @@ public class GameSystem : MonoBehaviour
     public float initialScale = 5.0f;
 
     [Tooltip("絵画が小さくなるスピード")]
-    public float scaleDownSpeed = 0.01f;
+    public float scaleDownSpeed = 0.05f;
 
     // ゲームが進行中かどうかを管理するフラグ
     private bool isGameActive = true;
@@ -84,7 +84,7 @@ public class GameSystem : MonoBehaviour
     void ScaleDownPainting()
     {
         // 現在のスケールから、スピードと時間に応じて引く
-        float newScale = paintingTransform.localScale.x - scaleDownSpeed * Time.deltaTime;
+        float newScale = paintingTransform.localScale.x - scaleDownSpeed * Mathf.Sqrt(Time.deltaTime);
 
         // スケールが0より大きい場合のみ更新
         if (newScale > 0)
