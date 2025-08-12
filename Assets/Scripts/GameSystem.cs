@@ -74,7 +74,7 @@ public class GameSystem : MonoBehaviour
         paintingTransform.localScale = Vector3.one * initialScale;
 
         // UIテキストを初期状態に設定
-        scoreText.text = "クリックで\nストップ！";
+        scoreText.text = "クリックでストップ！";
         resultText.text = "ひきすぎ注意！";
     }
 
@@ -83,11 +83,15 @@ public class GameSystem : MonoBehaviour
     /// </summary>
     void ScaleDownPainting()
     {
-        // 現在のスケールから、スピードと時間に応じて引く
-        float newScale = paintingTransform.localScale.x - scaleDownSpeed * Mathf.Sqrt(Time.deltaTime);
+        // 現在のスケールを取得
+        float currentScale = paintingTransform.localScale.x;
+        float limitScale = 0.001f;
 
-        // スケールが0より大きい場合のみ更新
-        if (newScale > 0)
+        // 目標スケールに向かって一定の速度で減少
+        float newScale = Mathf.MoveTowards(currentScale, limitScale, scaleDownSpeed * Time.deltaTime);
+
+        // tar
+        if (newScale > limitScale)
         {
             paintingTransform.localScale = new Vector3(newScale, newScale, newScale);
         }
@@ -150,7 +154,7 @@ public class GameSystem : MonoBehaviour
         }
 
         // UIに結果を反映
-        scoreText.text = "スコア: \n" + score;
+        scoreText.text = "スコア: " + score;
         resultText.text = resultMessage + "\n<size=24>Rキーでリスタート</size>"; // 評価とリスタート案内を表示
     }
 }
